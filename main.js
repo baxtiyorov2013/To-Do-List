@@ -1,37 +1,84 @@
-const inputBox = document.getElementById("input__box")
-const listContenir = document.getElementById("list__contenir")
+// const todoInput = document.querySelector(".todo-input");
+// const todoBtn = document.querySelector(".todo-btn");
+// const todoList = document.querySelector(".todo-list");
+// const todoForm = document.querySelector("form");
+// const texts = document.getElementById('texts')
+// const todoContainer = document.querySelector(".todo-container")
 
-function addTask() {
-    if (inputBox === '') {
-        alert("You must write something")
-    }else {
-        let li = document.createElement("li")
-        li.innerHTML = inputBox.value
-        listContenir.appendChild(li)
-        let span = document.createElement("span")
-        span.innerHTML = "\u00d7"
-        li.appendChild(span)
+
+// todoBtn.addEventListener("click", addTodo);
+
+// function addTodo(event) {
+//     event.preventDefault();
+
+//     texts.innerHTML=todoInput.value
+    
+  
+
+//     const todoCheck = document.createElement("button")
+//     todoCheck.classList.add("todo-check")
+
+//     newDiv.appendChild(todoCheck)
+
+//     // create trash
+
+//     const todoTrash = document.createElement("button")
+//     todoTrash.classList.add("todo-trash")
+
+//     newDiv.appendChild(todoTrash)
+
+//     // trash
+
+//     todoTrash.addEventListener("click", trashEvent)
+
+//     function trashEvent(event) {
+//         event.preventDefault();
+        
+//         todoDiv.remove();
+//     }
+
+//     // check
+
+//     todoCheck.addEventListener("click", checkEvent)
+
+//     function checkEvent(event) {
+//         event.preventDefault(); 
+
+//         todoDiv.classList.toggle("completed");
+//     }
+
+//     todoInput.value = "";
+// }
+
+
+
+
+const myInput = document.querySelector("#myInput");
+const myBtn = document.querySelector("#sendBtn");
+const myAccept = document.querySelector(".acceptBox");
+const myForm = document.querySelector("#myForm");
+
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const savedName = localStorage.getItem('name');
+    
+    if (savedName) {
+        myAccept.textContent = savedName;
     }
 
-    inputBox.value = ""
-    saveData()
-}
-
-listContenir.addEventListener("click", function (e) {
-    if (e.target.tagName === "LI") {
-        e.target.classList.toggle("checked")
-        saveData()
-    } else if (e.target.tagName === "SPAN") {
-        e.target.parentElement.remove()
-        saveData()
+    function saveName() {
+        const currentName = myInput.value;
+        myAccept.textContent = currentName;
+        localStorage.setItem('name', currentName);
     }
-}, false);
 
-function saveData() {
-    localStorage.setItem("data", listContenir.innerHTML)
-}
+    myInput.addEventListener('blur', saveName);
+    myInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            saveName();
+            myInput.blur();
+        }
+    });
 
-function showTask() {
-    listContenir.innerHTML = localStorage.getItem("data")
-}
-showTask()
+    myInput.value = "";
+});
